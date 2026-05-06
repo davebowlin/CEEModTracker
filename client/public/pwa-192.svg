@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192">
+  <rect width="192" height="192" fill="#15110d"/>
+  <circle cx="96" cy="96" r="82" fill="#2a1f15" stroke="#b3834d" stroke-width="8"/>
+  <text x="96" y="108" text-anchor="middle" font-size="54" fill="#f7ecd4" font-family="Segoe UI, sans-serif">CE</text>
+</svg>
