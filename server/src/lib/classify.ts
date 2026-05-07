@@ -5,9 +5,26 @@ export function classifyMod(input: {
   description: string;
   timeUpdatedUnix: number;
   ue5Release: Date;
+  tags?: string[];
 }): ModStatus {
-  const text = `${input.title} ${input.description}`.toLowerCase();
   const updated = new Date(input.timeUpdatedUnix * 1000);
+
+  // Strict date-based check: anything before the UE5 release is Legacy
+  if (updated < input.ue5Release) {
+    return "Legacy";
+  }
+
+  const tags = (input.tags || []).map((t) => t.toLowerCase());
+
+  if (tags.includes("enhanced")) {
+    return "Enhanced";
+  }
+
+  if (tags.includes("legacy")) {
+    return "Legacy";
+  }
+
+  const text = `${input.title} ${input.description}`.toLowerCase();
 
   if (text.includes("legacy") || text.includes("ue4")) {
     return "Legacy";
@@ -17,9 +34,5 @@ export function classifyMod(input: {
     return "Enhanced";
   }
 
-  if (updated > input.ue5Release) {
-    return "Likely Compatible";
-  }
-
-  return "Legacy";
+  return "Likely Compatible";
 }
