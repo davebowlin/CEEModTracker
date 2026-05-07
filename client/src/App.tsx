@@ -162,7 +162,7 @@ export function App() {
       {status?.lastSyncError && <p className="error">Last sync error: {status.lastSyncError}</p>}
 
       <section className="meta">
-        <span>Total Mods: {data?.itemCount ?? 0}</span>
+        <span>Total Mods: {filtered.length}</span>
         <span>Last Sync: {data ? new Date(data.lastSyncAtIso).toLocaleString() : "..."}</span>
       </section>
 
