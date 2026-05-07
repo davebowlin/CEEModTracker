@@ -20,12 +20,23 @@ export async function syncModsNow(): Promise<void> {
         "[sync] STEAM_API_KEY missing. Falling back to WORKSHOP_IDS. Set STEAM_API_KEY for full discovery."
       );
     } else {
-      ids = await discoverAllWorkshopIds({
-        apiKey: config.steamApiKey,
-        appId: config.steamAppId,
-        pageSize: config.workshopPageSize,
-        maxPages: config.workshopMaxPages
-      });
+      const [enhancedIds, legacyIds] = await Promise.all([
+        discoverAllWorkshopIds({
+          apiKey: config.steamApiKey,
+          appId: config.steamAppId,
+          pageSize: config.workshopPageSize,
+          maxPages: config.workshopMaxPages,
+          requiredtags: ["Enhanced"]
+        }),
+        discoverAllWorkshopIds({
+          apiKey: config.steamApiKey,
+          appId: config.steamAppId,
+          pageSize: config.workshopPageSize,
+          maxPages: config.workshopMaxPages,
+          requiredtags: ["Legacy"]
+        })
+      ]);
+      ids = [...new Set([...enhancedIds, ...legacyIds])];
     }
   }
 
@@ -38,11 +49,14 @@ export async function syncModsNow(): Promise<void> {
     const updatedAtIso = new Date(item.time_updated * 1000).toISOString();
     const description = item.description?.trim() ?? "";
 
+    const tags = item.tags?.map(t => t.tag) || [];
+
     const status = classifyMod({
       title: item.title,
       description,
       timeUpdatedUnix: item.time_updated,
-      ue5Release: config.ue5Release
+      ue5Release: config.ue5Release,
+      tags
     });
 
     return {
@@ -61,13 +75,12 @@ export async function syncModsNow(): Promise<void> {
     };
   });
 
-  const ue5Only = mapped.filter((mod) => mod.status !== "Legacy");
   const existing = await readDatabase();
   const merged = {
     ...existing,
     lastSyncAtIso: new Date().toISOString(),
-    itemCount: ue5Only.length,
-    mods: ue5Only.sort((a, b) => b.timeUpdatedUnix - a.timeUpdatedUnix)
+    itemCount: mapped.length,
+    mods: mapped.sort((a, b) => b.timeUpdatedUnix - a.timeUpdatedUnix)
   };
   await writeDatabase(merged);
 }

@@ -13,6 +13,7 @@ interface SteamWorkshopResponse {
       subscriptions: number;
       favorited: number;
       file_size: number;
+      tags?: Array<{ tag: string }>;
     }>;
   };
 }
@@ -50,6 +51,7 @@ export async function discoverAllWorkshopIds(params: {
   appId: number;
   pageSize: number;
   maxPages: number;
+  requiredtags?: string[];
 }): Promise<string[]> {
   const ids = new Set<string>();
   let page = 1;
@@ -64,7 +66,8 @@ export async function discoverAllWorkshopIds(params: {
           appid: params.appId,
           query_type: 1,
           page,
-          numperpage: params.pageSize
+          numperpage: params.pageSize,
+          ...(params.requiredtags && { requiredtags: params.requiredtags })
         },
         timeout: 20_000
       }
