@@ -28,6 +28,17 @@ body {
   margin-bottom: 0.5rem;
 }
 
+.sync-info {
+  display: inline-block;
+  font-size: 0.85rem;
+  color: #a89474;
+  font-style: italic;
+  margin-top: -0.25rem;
+  padding: 0.2rem 0.5rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
 .controls {
   display: grid;
   grid-template-columns: 1fr;
