@@ -179,7 +179,79 @@ body {
   color: #ddd1b7;
   line-height: 1.6;
   margin-bottom: 1.5rem;
-  white-space: pre-wrap;
+}
+
+.markdown-content {
+  font-size: 0.95rem;
+}
+
+.markdown-content p {
+  margin-bottom: 1rem;
+}
+
+.markdown-content h1, .markdown-content h2, .markdown-content h3 {
+  color: var(--accent);
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.markdown-content h1 { font-size: 1.5rem; border-bottom: 1px solid #4a3a2a; padding-bottom: 0.3rem; }
+.markdown-content h2 { font-size: 1.25rem; }
+.markdown-content h3 { font-size: 1.1rem; }
+
+.markdown-content ul, .markdown-content ol {
+  margin-bottom: 1rem;
+  padding-left: 1.5rem;
+}
+
+.markdown-content li {
+  margin-bottom: 0.4rem;
+}
+
+.markdown-content a {
+  color: #66c0f4;
+  text-decoration: none;
+}
+
+.markdown-content a:hover {
+  text-decoration: underline;
+}
+
+.markdown-content code {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 0.2rem 0.4rem;
+  border-radius: 3px;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.9em;
+}
+
+.markdown-content pre {
+  background: #1a1a1a;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+  border: 1px solid #3b2e20;
+}
+
+.markdown-content blockquote {
+  border-left: 4px solid var(--accent-2);
+  margin: 0 0 1rem 0;
+  padding: 0.5rem 1rem;
+  background: rgba(120, 86, 46, 0.1);
+  font-style: italic;
+}
+
+.markdown-content img {
+  max-width: 100%;
+  border-radius: 0.5rem;
+  margin: 1rem 0;
+}
+
+.markdown-content hr {
+  border: 0;
+  border-top: 1px solid #3b2e20;
+  margin: 1.5rem 0;
 }
 
 .mod-meta-grid {
@@ -251,3 +323,16 @@ body {
 }
 
 .error { color: #f28b82; }
+.spoiler {
+  background: #333;
+  color: #333;
+  padding: 0 4px;
+  border-radius: 2px;
+  cursor: help;
+  transition: all 0.2s;
+}
+
+.spoiler:hover {
+  background: #444;
+  color: var(--text);
+}

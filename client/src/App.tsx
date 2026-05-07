@@ -1,4 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import rehypeRaw from "rehype-raw";
+import DOMPurify from "dompurify";
 
 type ModStatus = "Enhanced" | "Likely Compatible" | "Legacy";
 type ModRecord = {
@@ -186,7 +190,36 @@ export function App() {
           {selectedMod ? (
             <article className={`card ${selectedMod.status.toLowerCase().replace(/\s+/g, "-")}`}>
               <h2>{selectedMod.title}</h2>
-              <p className="desc">{selectedMod.description || "No Steam description available."}</p>
+              <div className="desc markdown-content">
+                {selectedMod.description ? (
+                  <ReactMarkdown 
+                    remarkPlugins={[remarkGfm]} 
+                    rehypePlugins={[rehypeRaw]}
+                  >
+                    {DOMPurify.sanitize(
+                      selectedMod.description
+                        .replace(/\[h1\](.*?)\[\/h1\]/gis, '<h1>$1</h1>')
+                        .replace(/\[h2\](.*?)\[\/h2\]/gis, '<h2>$1</h2>')
+                        .replace(/\[h3\](.*?)\[\/h3\]/gis, '<h3>$1</h3>')
+                        .replace(/\[b\](.*?)\[\/b\]/gis, '<strong>$1</strong>')
+                        .replace(/\[i\](.*?)\[\/i\]/gis, '<em>$1</em>')
+                        .replace(/\[u\](.*?)\[\/u\]/gis, '<u>$1</u>')
+                        .replace(/\[strike\](.*?)\[\/strike\]/gis, '<del>$1</del>')
+                        .replace(/\[hr\]/gis, '<hr />')
+                        .replace(/\[spoiler\](.*?)\[\/spoiler\]/gis, '<span class="spoiler">$1</span>')
+                        .replace(/\[url=(.*?)\](.*?)\[\/url\]/gis, '<a href="$1" target="_blank" rel="noreferrer">$2</a>')
+                        .replace(/\[url\](.*?)\[\/url\]/gis, '<a href="$1" target="_blank" rel="noreferrer">$1</a>')
+                        .replace(/\[list\]/gis, '<ul>')
+                        .replace(/\[olist\]/gi, '<ol>')
+                        .replace(/\[\/list\]/gis, '</ul>')
+                        .replace(/\[\/olist\]/gi, '</ol>')
+                        .replace(/\[\*\](.*?)(?=\n|\[\*\]|\[\/list\]|\[\/olist\]|$)/gis, '<li>$1</li>')
+                    )}
+                  </ReactMarkdown>
+                ) : (
+                  "No Steam description available."
+                )}
+              </div>
               <div className="mod-meta-grid">
                 <p><strong>Status:</strong> <span className={`status-badge ${selectedMod.status.toLowerCase().replace(/\s+/g, "-")}`}>{selectedMod.status}</span></p>
                 <p><strong>Mod ID:</strong> {selectedMod.id}</p>
