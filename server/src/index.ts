@@ -56,18 +56,10 @@ async function main() {
     res.json({
       discoveryMode: config.workshopDiscoveryMode,
       hasSteamApiKey: Boolean(config.steamApiKey),
-      syncRequiresPassword: Boolean(config.adminSyncPassword),
       lastSyncError
     });
   });
-  app.post("/api/sync", async (req, res) => {
-    if (config.adminSyncPassword) {
-      const provided = req.header("x-admin-password") ?? "";
-      if (provided !== config.adminSyncPassword) {
-        res.status(401).json({ ok: false, error: "Unauthorized" });
-        return;
-      }
-    }
+  app.post("/api/sync", async (_req, res) => {
     try {
       await runSync();
       res.json({ ok: true, syncedAt: new Date().toISOString() });

@@ -12,6 +12,8 @@ Tracks Steam Workshop mods for Conan Exiles Enhanced compatibility.
 - REST API endpoint at `/api/mods`
 - PM2 + nginx deployment support for VPS
 - Windows GUI deploy tool for upload/update workflows
+- Sorting the lists by multiple criteria is now available
+
 
 ## Local setup
 

@@ -137,12 +137,28 @@ body {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  max-width: 70%;
+  max-width: 100%;
+}
+
+.mod-list-info {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  max-width: 75%;
+}
+
+.mod-author {
+  font-size: 0.75rem;
+  color: #8c7a61;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .mod-list-item .mod-id {
   font-size: 0.85rem;
   color: #a89474;
+  flex-shrink: 0;
 }
 
 .mod-list-item.enhanced { border-left-color: #3ca86f; }

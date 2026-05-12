@@ -42,7 +42,7 @@ export async function syncModsNow(): Promise<void> {
 
   const batches = chunk(ids, 100);
   const steamMods = (
-    await Promise.all(batches.map(async (batch) => fetchWorkshopDetails(batch)))
+    await Promise.all(batches.map(async (batch: string[]) => fetchWorkshopDetails(batch)))
   ).flat();
 
   const mapped: ModRecord[] = steamMods.map((item) => {

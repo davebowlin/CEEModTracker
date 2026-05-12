@@ -12,7 +12,6 @@ const EnvSchema = z.object({
   WORKSHOP_DISCOVERY_MODE: z.enum(["all", "manual"]).default("all"),
   WORKSHOP_PAGE_SIZE: z.coerce.number().default(100),
   WORKSHOP_MAX_PAGES: z.coerce.number().default(200),
-  ADMIN_SYNC_PASSWORD: z.string().optional(),
   WORKSHOP_IDS: z
     .string()
     .default("880454836,931088249,1396310739,1369743238")
@@ -29,6 +28,5 @@ export const config = {
   workshopDiscoveryMode: env.WORKSHOP_DISCOVERY_MODE,
   workshopPageSize: env.WORKSHOP_PAGE_SIZE,
   workshopMaxPages: env.WORKSHOP_MAX_PAGES,
-  adminSyncPassword: env.ADMIN_SYNC_PASSWORD,
-  workshopIds: env.WORKSHOP_IDS.split(",").map((item) => item.trim())
+  workshopIds: env.WORKSHOP_IDS.split(",").map((item: string) => item.trim())
 };
