@@ -113,7 +113,7 @@ export function App() {
       <header className="hero">
         <h1>Conan Exiles Enhanced Mod Tracker</h1>
         <p>Steam Workshop metadata, compatibility status, and last update timestamps.</p>
-        <p className="sync-info">Autosyncs every 5 minutes</p>
+        <p className="sync-info">Autosyncs every 15 minutes</p>
       </header>
 
       <section className="controls">
